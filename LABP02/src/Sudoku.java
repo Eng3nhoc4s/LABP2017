@@ -123,4 +123,13 @@ public class Sudoku {
 
 		return false;
 	}
+
+	
+	public static boolean hasRepeatedNumbersCols(int[][] matrix){
+		//TODO
+	}
+
+	private static boolean checkSingleColRepetition(int[] line){
+		//TODO
+	}
 }

@@ -11,6 +11,7 @@ public class RunSudoku {
 		}else{
 			int [][] myMatrix = Sudoku.fileToMatrix(args[0]);
 			Sudoku.printMatrix(myMatrix);
+			System.out.println("Has repeated lines: " + Sudoku.hasRepeatedNumbersLine(myMatrix));
 		}
 		
 	}

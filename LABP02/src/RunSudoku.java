@@ -6,7 +6,13 @@ public class RunSudoku {
 	 */
 	public static void main(String[] args) {
 
-		Sudoku.fileToMatrix(args[0]);
+		if(args.length == 0){
+			System.out.println("Insufficient parameters!\nUsage:\n\tRunSudoku.java <filename>");
+		}else{
+			int [][] myMatrix = Sudoku.fileToMatrix(args[0]);
+			Sudoku.printMatrix(myMatrix);
+		}
+		
 	}
 
 }

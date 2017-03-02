@@ -43,9 +43,23 @@ public class Sudoku {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+		
+		printMatrix(sudokuGrid); //TODO REMOVER
 
 		return sudokuGrid;
 	}
 
 	
+	public static void printMatrix(int [][] matrix){
+		int x = 0;
+
+		for (int y = 0; y < 9; y++) {
+			if (y % 3 == 0) {
+				System.out.println("+-----+-----+-----+");
+			}else{
+				System.out.println();
+			}
+		}
+		
+	}
 }

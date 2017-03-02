@@ -36,7 +36,7 @@ public class Sudoku {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.err.println("Ficheiro " + file + " n�o encontrado!");
+			System.err.println("Ficheiro " + file + " não encontrado!");
 		} catch (NumberFormatException e) {
 			System.err.println("Os caracteres no ficheiro " + file + " têm de ser digitos!");
 		} catch (IOException e) {

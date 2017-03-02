@@ -48,7 +48,9 @@ public class Sudoku {
 
 	/**
 	 * Given a matrix of ints with a sudoku puzzle, displays it propperly
-	 * @param matrix A matrix of ints
+	 * 
+	 * @param matrix
+	 *            A matrix of ints
 	 */
 	public static void printMatrix(int[][] matrix) {
 
@@ -59,22 +61,66 @@ public class Sudoku {
 			// If it's an horizontal div line print it and don't count as
 			// printed line of nums
 			if (lines % 3 == 0)
-				System.out.println("+-----+-----+-----+");		
+				System.out.println("+-----+-----+-----+");
 
 			// Print the numbers columns
-			for (cols = 0; cols < matrix[0].length; cols +=3) {
-				System.out.print("|" + matrix[lines][cols] + " " + matrix[lines][cols + 1] + " " + matrix[lines][cols + 2]);
-					
+			for (cols = 0; cols < matrix[0].length; cols += 3) {
+				System.out.print(
+						"|" + matrix[lines][cols] + " " + matrix[lines][cols + 1] + " " + matrix[lines][cols + 2]);
+
 			}
-			
-			//End the table and skip the line
+
+			// End the table and skip the line
 			System.out.print("|\n");
-			
-			//Lets print the next line
+
+			// Lets print the next line
 			lines++;
 		}
-		
-		//Close the table's bottom
+
+		// Close the table's bottom
 		System.out.println("+-----+-----+-----+");
+	}
+
+	/**
+	 * Checks if a matrix has any line with repetitions
+	 * 
+	 * @param matrix
+	 *            An array of arrays of ints (int[][])
+	 * @return True if it has a repetition on any line
+	 */
+	public static boolean hasRepeatedNumbersLine(int[][] matrix) {
+
+		// Iterate the lines
+		for (int line = 0; line < matrix.length; line++) {
+
+			if (checkSingleLineRepetition(matrix[line]))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Verifies if a line has repeated numbers
+	 * 
+	 * @param line
+	 *            An int array
+	 * @return True if a number repeats
+	 */
+	private static boolean checkSingleLineRepetition(int[] line) {
+
+		// Iterate the pivot to search
+		for (int i = 0; i < line.length; i++) {
+
+			int srch = line[i];
+
+			// The actual search process
+			for (int j = i + 1; j < line.length; j++) {
+
+				if (srch == line[j])
+					return true;
+			}
+		}
+
+		return false;
 	}
 }

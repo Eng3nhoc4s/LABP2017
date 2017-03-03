@@ -36,11 +36,15 @@ public class Sudoku {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.err.println("Ficheiro " + file + " não encontrado!");
+			System.err.println("File " + file + " not found!");
+			return null;
 		} catch (NumberFormatException e) {
-			System.err.println("Os caracteres no ficheiro " + file + " têm de ser digitos!");
+			System.err.println("The characters in file " + file
+					+ " must be digits!");
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		}
 
 		return sudokuGrid;
@@ -65,8 +69,9 @@ public class Sudoku {
 
 			// Print the numbers columns
 			for (cols = 0; cols < matrix[0].length; cols += 3) {
-				System.out.print(
-						"|" + matrix[lines][cols] + " " + matrix[lines][cols + 1] + " " + matrix[lines][cols + 2]);
+				System.out.print("|" + matrix[lines][cols] + " "
+						+ matrix[lines][cols + 1] + " "
+						+ matrix[lines][cols + 2]);
 
 			}
 
@@ -98,21 +103,45 @@ public class Sudoku {
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * Checks if a matrix has repeated numbers in it's columns
-	 * @param matrix The matrix to be checked
+	 * 
+	 * @param matrix
+	 *            The matrix to be checked
 	 * @return True if has repeated numbers
 	 */
-	public static boolean hasRepeatedNumbersCols(int[][] matrix){
-		
-		//To test the columns for repetitions without adding further functionality we transpose
-		int [][] transposedMatrix = transposeMatrix(matrix);
-		
+	public static boolean hasRepeatedNumbersCols(int[][] matrix) {
+
+		// To test the columns for repetitions without adding further
+		// functionality we transpose
+		int[][] transposedMatrix = transposeMatrix(matrix);
+
 		return hasRepeatedNumbersLine(transposedMatrix);
 	}
-	
+
+	/**
+	 * Verifies if there is any repetition of number inside the 3x3 subgroups
+	 * 
+	 * @param matrix
+	 *            The sudoku matrix
+	 * @return True if there are repetitions
+	 */
+	public static boolean checkRepetitionInSubgroups(int[][] matrix) {
+
+		// Runs the lines of subgroups
+		for (int i = 1; i < 4; i++) {
+			// runs the cols of subgroups
+			for (int j = 1; j < 4; j++) {
+
+				if (checkLineForRepetitions(getQuadrantAsLine(matrix, i, j))) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	/**
 	 * Verifies if an int [] has repeated numbers
@@ -135,27 +164,51 @@ public class Sudoku {
 					return true;
 			}
 		}
-
 		return false;
 	}
-	
+
 	/**
 	 * Transposes a matrix
-	 * @param matrix The matrix to be transposed
+	 * 
+	 * @param matrix
+	 *            The matrix to be transposed
 	 * @return A transposed matrix (the lines become columns and vice versa)
 	 */
-	private static int [][] transposeMatrix(int [][] matrix){
-		
-		int [][] transposed = new int [matrix.length][matrix[0].length];
-		
+	private static int[][] transposeMatrix(int[][] matrix) {
+
+		int[][] transposed = new int[matrix.length][matrix[0].length];
+
 		for (int i = 0; i < matrix.length; i++) {
-			
+
 			for (int j = 0; j < matrix.length; j++) {
 				transposed[i][j] = matrix[j][i];
 			}
 		}
-		
 		return transposed;
+	}
+
+	/**
+	 * Returns the specified subgroup of the sudoku grid
+	 * 
+	 * @param matrix
+	 *            The sudoku matrix
+	 * @param row
+	 *            The subgroup row (from 1 to 3)
+	 * @param col
+	 *            The subgroup column (from 1 to 3)
+	 * @return An int [] with the selected subgroup
+	 */
+	private static int[] getQuadrantAsLine(int[][] matrix, int row, int col) {
+
+		int[] line = new int[matrix.length];
+		int index = 0;
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				line[index++] = matrix[i][j];
+			}
+		}
+		return line;
 	}
 
 }

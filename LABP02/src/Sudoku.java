@@ -93,20 +93,35 @@ public class Sudoku {
 		// Iterate the lines
 		for (int line = 0; line < matrix.length; line++) {
 
-			if (checkSingleLineRepetition(matrix[line]))
+			if (checkLineForRepetitions(matrix[line]))
 				return true;
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Checks if a matrix has repeated numbers in it's columns
+	 * @param matrix The matrix to be checked
+	 * @return True if has repeated numbers
+	 */
+	public static boolean hasRepeatedNumbersCols(int[][] matrix){
+		
+		//To test the columns for repetitions without adding further functionality we transpose
+		int [][] transposedMatrix = transposeMatrix(matrix);
+		
+		return hasRepeatedNumbersLine(transposedMatrix);
+	}
+	
 
 	/**
-	 * Verifies if a line has repeated numbers
+	 * Verifies if an int [] has repeated numbers
 	 * 
 	 * @param line
 	 *            An int array
 	 * @return True if a number repeats
 	 */
-	private static boolean checkSingleLineRepetition(int[] line) {
+	private static boolean checkLineForRepetitions(int[] line) {
 
 		// Iterate the pivot to search
 		for (int i = 0; i < line.length; i++) {
@@ -123,13 +138,24 @@ public class Sudoku {
 
 		return false;
 	}
-
 	
-	public static boolean hasRepeatedNumbersCols(int[][] matrix){
-		//TODO
+	/**
+	 * Transposes a matrix
+	 * @param matrix The matrix to be transposed
+	 * @return A transposed matrix (the lines become columns and vice versa)
+	 */
+	private static int [][] transposeMatrix(int [][] matrix){
+		
+		int [][] transposed = new int [matrix.length][matrix[0].length];
+		
+		for (int i = 0; i < matrix.length; i++) {
+			
+			for (int j = 0; j < matrix.length; j++) {
+				transposed[i][j] = matrix[j][i];
+			}
+		}
+		
+		return transposed;
 	}
 
-	private static boolean checkSingleColRepetition(int[] line){
-		//TODO
-	}
 }

@@ -1,9 +1,16 @@
+import java.util.Scanner;
 
 public class RunCalc {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		Calc calc = new Calc();
 
+		Scanner sc = new Scanner(System.in);
+		
+		while(sc.hasNextLine()){
+			System.out.println(calc.run(sc.nextLine()));
+		}
 	}
 
 }

@@ -65,7 +65,10 @@ public class Calc {
 
 			} else if (currentToken.equals("-")) { // SUB
 				try {
-					stack.push(subtract(stack.pop(), stack.pop()));
+					double v1 = stack.pop();
+					double v2 = stack.pop();
+					
+					stack.push(subtract(v2, v1));
 				} catch (EmptyStackException e) {
 
 					Log.log(Level.SEVERE, EMPTY_STACK_ERROR);
@@ -85,7 +88,19 @@ public class Calc {
 
 			} else if (currentToken.equals("/")) { // DIV
 				try {
-					stack.push(divide(stack.pop(), stack.pop()));
+					double v1 = stack.pop();
+					double v2 = stack.pop();
+					
+					double result = divide(v2, v1);
+					
+					if(!Double.isInfinite(result)){
+						stack.push(result);
+					}else{
+						Log.log(Level.SEVERE, "Cannot divide 0");
+						stack = backup;
+						break;
+					}
+					
 				} catch (EmptyStackException e) {
 
 					Log.log(Level.SEVERE, EMPTY_STACK_ERROR);
@@ -152,6 +167,18 @@ public class Calc {
 					stack = backup;
 					break;
 				}
+				
+			} else if (currentToken.equals("ln")) { // CHANGE THE AMOUNT OF TRAILING 0's
+
+				double result = ln(stack.pop());
+				
+				if(!Double.isNaN(result)){
+					stack.push(result);
+				}else{
+					Log.log(Level.SEVERE, "Cannot calculate the logarythm of negative numbers.");
+					stack = backup;
+					break;
+				}
 
 			} else { // ITS A NUMBER, STACK IT
 				
@@ -167,7 +194,7 @@ public class Calc {
 		
 		// RETURN STATEMENT
 		if(!stack.isEmpty()){
-			System.out.println(stack.toString());
+			System.out.println(stack.toString()); //TODO: To remove later
 			return nfFormat.format(stack.peek());
 		}else{
 			return "";
@@ -310,6 +337,15 @@ public class Calc {
 	 */
 	private double symetric(double v1) {
 		return v1 * (-1);
+	}
+	
+	/**
+	 * The logarythmic fucntion
+	 * @param v1 First Value
+	 * @return The result
+	 */
+	private double ln(double v1){
+		return Math.log(v1);
 	}
 
 }
